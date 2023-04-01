@@ -126,6 +126,6 @@ export class ServiciosComponent implements OnInit {
   }
 
   goToCreateEditService() {
-    this.Router.navigate(['servicios', 'crear-servicio'])
+    this.Router.navigate(['crear-servicio'])
   }
 }

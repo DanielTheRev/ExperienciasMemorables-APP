@@ -1,7 +1,7 @@
-<div class="wrapper card">
-  <header>
-    <h3>Crear nuevo Servicio</h3>
-  </header>
+<header>
+  <h3 class="text-white">Crear nuevo Servicio</h3>
+</header>
+<div class="wrapper">
   <form class="card">
     <div class="mb-2">
       <label for="name" class="form-label">Nombre</label>
@@ -32,18 +32,21 @@
         (change)="loadImg($event)"
       />
     </div>
-    <button class="btn btn-sm btn-primary btn-block" (click)="saveService()">Guardar</button>
+    <div class="img-container">
+      <img [src]="localIconFile.src" *ngIf="localIconFile" />
+    </div>
+    <button class="btn btn-sm btn-primary btn-block" (click)="saveService()">
+      Guardar
+    </button>
   </form>
-  <div class="img-container">
-    <img [src]="localIconFile.src" *ngIf="localIconFile"/>
-  </div>
-</div>
 
-<div class="img-list-to-upload card">
-  <h5>Lista de imagenes</h5>
-  <div class="img-list card">
-    <div class="img-container" *ngFor="let img of localImgFiles">
-      <img [src]="img.src" />
+
+  <div class="img-list-to-upload card">
+    <h5>Lista de imagenes</h5>
+    <div class="img-list card">
+      <div class="img-container" *ngFor="let img of localImgFiles">
+        <img [src]="img.src" />
+      </div>
     </div>
   </div>
 </div>

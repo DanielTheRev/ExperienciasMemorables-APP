@@ -31,12 +31,7 @@ export const AppRoutes: Routes = [
           {
             path: 'servicio/:id',
             component: ServicioPageComponent,
-            pathMatch: 'full'
-          },
-          {
-            path: 'crear-servicio',
-            component: CreateEditServicioComponent,
-            title: 'Crear nuevo servicio',
+            pathMatch: 'full',
           },
           {
             path: '**',
@@ -44,6 +39,11 @@ export const AppRoutes: Routes = [
             pathMatch: 'full',
           },
         ],
+      },
+      {
+        path: 'crear-servicio',
+        component: CreateEditServicioComponent,
+        title: 'Crear nuevo servicio',
       },
       {
         path: 'contacto',
