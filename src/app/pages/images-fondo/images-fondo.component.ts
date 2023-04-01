@@ -29,7 +29,6 @@ export class ImagesFondoComponent implements OnInit {
     this.isLoading = 'load Images';
     this.ImgBGService.getImgBackground().subscribe({
       next: (res) => {
-        console.log(res);
         if (res.success) {
           this.imgs = res.data;
           this.canSubmit = 8 - res.data.length;

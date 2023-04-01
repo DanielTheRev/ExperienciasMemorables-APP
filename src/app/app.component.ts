@@ -11,9 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent implements AfterViewInit {
   // @ViewChild('body') body!: ElementRef<HTMLBodyElement>;
-  theme: string = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'ligth';
+  theme: string = 'ligth'
   ngAfterViewInit(): void {
     window
       .matchMedia('(prefers-color-scheme: dark)')

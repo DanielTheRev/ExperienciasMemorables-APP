@@ -1,0 +1,49 @@
+<div class="wrapper card">
+  <header>
+    <h3>Crear nuevo Servicio</h3>
+  </header>
+  <form class="card">
+    <div class="mb-2">
+      <label for="name" class="form-label">Nombre</label>
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="name"
+        class="form-control form-control-sm"
+      />
+    </div>
+    <div class="mb-2">
+      <label for="icon">Icono</label>
+      <input
+        type="file"
+        name="icon"
+        class="form-control"
+        (change)="loadImg($event)"
+        required
+      />
+    </div>
+    <div class="mb-2">
+      <label for="images">Imagenes</label>
+      <input
+        type="file"
+        name="images"
+        multiple
+        class="form-control"
+        (change)="loadImg($event)"
+      />
+    </div>
+    <button class="btn btn-sm btn-primary btn-block" (click)="saveService()">Guardar</button>
+  </form>
+  <div class="img-container">
+    <img [src]="localIconFile.src" *ngIf="localIconFile"/>
+  </div>
+</div>
+
+<div class="img-list-to-upload card">
+  <h5>Lista de imagenes</h5>
+  <div class="img-list card">
+    <div class="img-container" *ngFor="let img of localImgFiles">
+      <img [src]="img.src" />
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <header class="p-2 bg-primary">
-  <h3>Imagenes de fondo</h3>
+  <h3 class="text-white">Imagenes de fondo</h3>
 </header>
 
 <div class="wrapper">
@@ -14,7 +14,7 @@
       />
       <!-- <button class="btn btn-sm btn-danger">Quitar todas</button> -->
       <button
-        class="btn btn-sm btn-primary"
+        class="btn btn-sm btn-success"
         (click)="submitData()"
         [disabled]="files.length <= 0 || canSubmit <= 0"
       >
@@ -28,6 +28,7 @@
         {{ isLoading !== "submiting images" ? "Guardar Cambios" : "" }}
       </button>
     </div>
+    <!-- Estado de cuantas imagenes puede subir -->
     <div class="status">
       <div
         class="alert alert-info m-1 text-center p-1"
@@ -40,9 +41,18 @@
       <div
         class="alert alert-warning m-1 text-center p-1"
         role="alert"
-        *ngIf="canSubmit <= 0 && !isLoading"
+        *ngIf="canSubmit <= 0 && isLoading !== 'load Images'"
       >
         Debes eliminar alguna foto para poder subir otra
+      </div>
+      <div
+        class="alert alert-secondary m-1 text-center p-1"
+        role="alert"
+        *ngIf="
+          canSubmit > 0 && isLoading !== 'load Images' && files.length <= 0
+        "
+      >
+        Puedes subir {{ canSubmit }} {{ canSubmit >= 1 ? "foto" : "fotos" }}
       </div>
     </div>
   </div>
@@ -53,10 +63,14 @@
     </div>
   </div>
   <!-- Listado de imagenes -->
-  <div class="img-list card" *ngIf="isLoading !== 'load Images'">
+  <div
+    class="img-list card border-2 border-primary"
+    *ngIf="isLoading !== 'load Images'"
+  >
     <!-- imagen -->
     <div class="img-container" *ngFor="let img of imgs">
       <img [ngSrc]="img.src.secure_url" fill />
+      <!-- loading element -->
       <div
         class="loading"
         *ngIf="deletingImg.state && deletingImg.id === img._id"
@@ -65,10 +79,7 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <div
-        class="img-panel"
-        *ngIf="!deletingImg.state"
-      >
+      <div class="img-panel" *ngIf="!deletingImg.state">
         <button class="btn btn-danger btn-sm" (click)="deleteImg(img._id!)">
           Eliminar
         </button>

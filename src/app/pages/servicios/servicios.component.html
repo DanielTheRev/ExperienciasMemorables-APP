@@ -1,3 +1,27 @@
 <header class="p-2 bg-primary">
   <h3 class="text-white">Administrar Servicios</h3>
+  <div class="actionsbox">
+    <button class="btn btn-sm btn-success" (click)="goToCreateEditService()">
+      Nuevo servicio
+    </button>
+  </div>
 </header>
+<div class="menu">
+  <ul class="nav nav-underline" data-bs-theme="dark">
+    <li class="nav-item" *ngFor="let service of services; index as i">
+      <a
+        class="nav-link"
+        #link
+        [routerLink]="['servicio', service.name]"
+        routerLinkActive="active"
+        (click)="link.scrollIntoView({ block: 'center' })"
+        aria-current="page"
+        >{{ service.name }}</a
+      >
+    </li>
+  </ul>
+</div>
+
+<div class="page">
+  <router-outlet></router-outlet>
+</div>
