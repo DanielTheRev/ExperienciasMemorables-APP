@@ -1,5 +1,5 @@
 <header class="p-2 bg-primary">
-  <h3 class="text-white">Administrar Servicios</h3>
+  <h3 class="text-white">Administrar Servicios <span class="badge text-bg-success">{{ serviceSelected }}</span></h3>
   <div class="actionsbox">
     <button class="btn btn-sm btn-success" (click)="goToCreateEditService()">
       Nuevo servicio
@@ -8,12 +8,13 @@
 </header>
 <div class="menu">
   <ul class="nav nav-underline" data-bs-theme="dark">
-    <li class="nav-item" *ngFor="let service of services; index as i">
+    <li class="nav-item" #link *ngFor="let service of services.data; index as i">
       <a
         class="nav-link"
-        #link
+        
         [routerLink]="['servicio', service.name]"
         routerLinkActive="active"
+        (click)="serviceSelected = service.name"
         (click)="link.scrollIntoView({ block: 'center' })"
         aria-current="page"
         >{{ service.name }}</a

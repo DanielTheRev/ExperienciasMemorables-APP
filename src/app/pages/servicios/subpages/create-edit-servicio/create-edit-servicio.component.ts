@@ -2,6 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ServiceDTO } from '../../interfaces/servicio.interface';
+import { ServiciosState } from '../../states/servicios.state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-edit-servicio',
@@ -12,6 +15,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreateEditServicioComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
+  private serviceStore = inject(ServiciosState);
+  private Router = inject(Router);
+  loading = false;
   name: string = '';
   iconFile: File | null = null;
   localIconFile: { src: SafeUrl } | null = null;
@@ -51,11 +57,25 @@ export class CreateEditServicioComponent implements OnInit {
       console.log('necesita un icono');
       return;
     }
-
-    console.log({
+    const serviceDTO: ServiceDTO = {
       name: this.name,
       icon: this.iconFile,
-      imgs: this.imgFiles,
+      images: this.imgFiles,
+    };
+    this.loading = true;
+    this.serviceStore.addService(serviceDTO).subscribe({
+      next: (res) => {
+        if (res) {
+          this.loading = false;
+          this.Router.navigate(['servicios', 'servicio', this.name], {
+            queryParams: {
+              id: 'asdasd',
+            },
+          });
+          return;
+        }
+      },
     });
+    // this.Router.navigate(['services'])
   }
 }
