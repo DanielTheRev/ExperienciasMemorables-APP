@@ -4,7 +4,6 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { ImagesFondoComponent } from './pages/images-fondo/images-fondo.component';
-import { ServicioPageComponent } from './pages/servicios/subpages/servicio-page/servicio-page.component';
 import { CreateEditServicioComponent } from './pages/servicios/subpages/create-edit-servicio/create-edit-servicio.component';
 
 export const AppRoutes: Routes = [
@@ -29,8 +28,8 @@ export const AppRoutes: Routes = [
         title: 'Editar Servicios',
         children: [
           {
-            path: 'servicio/:id',
-            component: ServicioPageComponent,
+            path: 'servicio/:name/:id',
+            component: CreateEditServicioComponent,
             pathMatch: 'full',
           },
           {

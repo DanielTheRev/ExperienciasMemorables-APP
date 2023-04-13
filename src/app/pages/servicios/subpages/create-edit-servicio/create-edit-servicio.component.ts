@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ServiceDTO } from '../../interfaces/servicio.interface';
+import { Service, ServiceDTO } from '../../interfaces/servicio.interface';
 import { ServiciosState } from '../../states/servicios.state';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-edit-servicio',
@@ -17,19 +17,55 @@ export class CreateEditServicioComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private serviceStore = inject(ServiciosState);
   private Router = inject(Router);
+  private ActivatedRoute = inject(ActivatedRoute);
+  @Input('service') service!: Service;
+
   loading = false;
   name: string = '';
   iconFile: File | null = null;
-  localIconFile: { src: SafeUrl } | null = null;
+  localIconFile: { src: SafeUrl | string } | null = null;
 
   imgFiles: File[] = [];
-  localImgFiles: { src: SafeUrl; id: string }[] = [];
+  localImgFiles: { src: string | SafeUrl; id: string }[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.ActivatedRoute.params.subscribe({
+      next: (params) => {
+        this.serviceStore.getServiceChanges(params['id']).subscribe({
+          next: (service) => {
+            if (service) {
+              this.service = service;
+              this.name = service.name;
+              this.localIconFile = { src: service.icon.secure_url };
+              this.localImgFiles = service.images.map((e) => ({
+                src: e.secure_url,
+                id: e.asset_id,
+              }));
+            }
+          },
+        });
+      },
+    });
+  }
+
+  deleteImg(id: string) {
+    const isLocalImg = this.imgFiles.find((e) => e.name === id);
+    if (isLocalImg) {
+      console.log(`Es una imagen local [${id}]`);
+      this.imgFiles = this.imgFiles.filter((e) => e.name !== id);
+      this.localImgFiles = this.localImgFiles.filter((e) => e.id !== id);
+      return;
+    }
+
+    this.serviceStore.removeImgFromService(this.service._id!, id).subscribe({
+      next: (res) => {
+        console.log(res.message);
+      },
+    });
+  }
 
   loadImg(event: any) {
     if (event.target.name === 'icon') {
-      console.log('quiere subir un icono');
       this.iconFile = event.target.files[0];
       const blobURL = window.URL.createObjectURL(this.iconFile!);
       this.localIconFile = {
@@ -49,33 +85,45 @@ export class CreateEditServicioComponent implements OnInit {
   }
 
   saveService() {
-    if (!this.name) {
-      console.log('necesita un nombre');
-      return;
-    }
-    if (!this.iconFile) {
-      console.log('necesita un icono');
+    if (!this.service) {
+      if (!this.name) {
+        console.log('necesita un nombre');
+        return;
+      }
+      if (!this.iconFile) {
+        console.log('necesita un icono');
+        return;
+      }
+      const serviceDTO: ServiceDTO = {
+        name: this.name,
+        icon: this.iconFile,
+        images: this.imgFiles,
+      };
+      this.loading = true;
+      this.serviceStore.addService(serviceDTO).subscribe({
+        next: (res) => {
+          if (res) {
+            this.loading = false;
+            this.Router.navigate(['servicios', 'servicio', this.name]);
+            return;
+          }
+        },
+      });
       return;
     }
     const serviceDTO: ServiceDTO = {
+      _id: this.service._id,
       name: this.name,
-      icon: this.iconFile,
+      icon: this.iconFile!,
       images: this.imgFiles,
     };
     this.loading = true;
-    this.serviceStore.addService(serviceDTO).subscribe({
+
+    this.serviceStore.updateService(serviceDTO).subscribe({
       next: (res) => {
-        if (res) {
-          this.loading = false;
-          this.Router.navigate(['servicios', 'servicio', this.name], {
-            queryParams: {
-              id: 'asdasd',
-            },
-          });
-          return;
-        }
+        console.log(res);
+        this.loading = false;
       },
     });
-    // this.Router.navigate(['services'])
   }
 }

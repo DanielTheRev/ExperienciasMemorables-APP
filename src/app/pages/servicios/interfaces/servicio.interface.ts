@@ -6,13 +6,14 @@ export interface ServiceData {
 }
 
 export interface Service {
-  id?: string;
+  _id?: string;
   name: string;
   icon: ImgCL;
   images: ImgCL[];
 }
 
 export interface ServiceDTO {
+  _id?: string;
   name: string;
   icon: File;
   images: File[];

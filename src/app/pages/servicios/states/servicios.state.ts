@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, from, map, of } from 'rxjs';
 import {
   Service,
   ServiceDTO,
   ServiceData,
 } from '../interfaces/servicio.interface';
 import { ServiciosService } from '../services/servicios.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,6 @@ export class ServiciosState {
     isEmpty: false,
     data: [],
   });
-  private Router = inject(Router);
 
   readonly services$ = this._servicesSource.asObservable();
   private ServiciosService = inject(ServiciosService);
@@ -36,23 +34,17 @@ export class ServiciosState {
     return;
   }
 
+  getServiceChanges(_id: string) {
+    return this.services$.pipe(
+      map((ser) => {
+        return ser.data.find((e) => e._id === _id);
+      })
+    );
+  }
+
   addService(service: ServiceDTO) {
-    // return this.ServiciosService.addService(service).subscribe({
-    //   next: (res) => {
-    //     if (res.success) {
-    //       const services = [res.data, ...this.getServiceValue().data];
-    //       const data: ServiceData = {
-    //         isEmpty: services.length <= 0,
-    //         data: services,
-    //       };
-    //       this.setServices(data);
-    //       this.Router.navigate(['services', res.data.name]);
-    //     }
-    //   },
-    // });
     return this.ServiciosService.addService(service).pipe(
       map((res) => {
-        console.log(res);
         if (res.success) {
           const services = [res.data, ...this.getServiceValue().data];
           const data: ServiceData = {
@@ -66,12 +58,50 @@ export class ServiciosState {
     );
   }
 
+  updateService(service: ServiceDTO) {
+    return this.ServiciosService.updateService(service).pipe(
+      map((service) => {
+        if (service.success) {
+          const services = this.getServiceValue().data.map((s) => {
+            if (s._id === service.data._id) {
+              s = service.data;
+            }
+            return s;
+          });
+
+          this.setServices({ data: services, isEmpty: services.length <= 0 });
+        }
+
+        return { success: service.success, message: service.message };
+      })
+    );
+  }
+
+  removeImgFromService(serviceID: string, imgID: string) {
+    return this.ServiciosService.deleteImgFromService(serviceID, imgID).pipe(
+      map((e) => {
+        if (e.success) {
+          const services = this.getServiceValue().data.map((service) => {
+            if (service._id === serviceID) {
+              service.images = service.images.filter(
+                (img) => img.asset_id !== imgID
+              );
+            }
+            return service;
+          });
+          this.setServices({ data: services, isEmpty: services.length <= 0 });
+        }
+        return e;
+      })
+    );
+  }
+
   removeService(_id: string) {
     this.ServiciosService.deleteService(_id).subscribe({
       next: (res) => {
         if (res.success) {
           const services = this.getServiceValue().data.filter(
-            (e) => e.id !== _id
+            (e) => e._id !== _id
           );
           const data: ServiceData = {
             isEmpty: services.length <= 0,

@@ -19,7 +19,7 @@
         [disabled]="files.length <= 0 || canSubmit <= 0"
       >
         <div
-          class="spinner-border text-success"
+          class="spinner-border text-white"
           role="status"
           *ngIf="isLoading === 'submiting images'"
         >
@@ -52,7 +52,7 @@
           canSubmit > 0 && isLoading !== 'load Images' && files.length <= 0
         "
       >
-        Puedes subir {{ canSubmit }} {{ canSubmit >= 1 ? "foto" : "fotos" }}
+        Puedes subir {{ canSubmit }} {{ canSubmit > 1 ? "fotos" : "foto" }}
       </div>
     </div>
   </div>

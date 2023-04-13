@@ -24,8 +24,14 @@ export class ServiciosComponent implements OnInit {
       next: (res) => {
         this.services = res;
         if (!res.isEmpty) {
-          if (res.data[0]) {
-            this.Router.navigate(['servicios', 'servicio', res.data[0].name]);
+          const first_route = res.data[0];
+          if (first_route) {
+            this.Router.navigate([
+              'servicios',
+              'servicio',
+              first_route.name,
+              first_route._id,
+            ]);
             this.serviceSelected = res.data[0].name;
           }
         }
