@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { Service, ServiceDTO } from '../../interfaces/servicio.interface';
 import { ServiciosState } from '../../states/servicios.state';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImagesGridComponent } from 'src/app/pages/shared/images-grid/images-grid.component';
 
 @Component({
   selector: 'app-create-edit-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ImagesGridComponent, FormsModule],
   templateUrl: './create-edit-servicio.component.html',
   styleUrls: ['./create-edit-servicio.component.scss'],
 })
@@ -27,7 +28,7 @@ export class CreateEditServicioComponent implements OnInit {
 
   imgFiles: File[] = [];
   localImgFiles: { src: string | SafeUrl; id: string }[] = [];
-
+  deletingImg = { state: false, id: '' };
   ngOnInit(): void {
     this.ActivatedRoute.params.subscribe({
       next: (params) => {
@@ -49,17 +50,20 @@ export class CreateEditServicioComponent implements OnInit {
   }
 
   deleteImg(id: string) {
+    this.deletingImg = { state: true, id };
     const isLocalImg = this.imgFiles.find((e) => e.name === id);
     if (isLocalImg) {
       console.log(`Es una imagen local [${id}]`);
       this.imgFiles = this.imgFiles.filter((e) => e.name !== id);
       this.localImgFiles = this.localImgFiles.filter((e) => e.id !== id);
+      this.deletingImg = { state: false, id: '' };
       return;
     }
 
     this.serviceStore.removeImgFromService(this.service._id!, id).subscribe({
       next: (res) => {
         console.log(res.message);
+        this.deletingImg = { state: false, id: '' };
       },
     });
   }

@@ -8,11 +8,12 @@ import {
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ImgBgService } from './service/img-bg.service';
 import { ImgBG } from './interface/imgBackground.interface';
+import { ImagesGridComponent } from '../shared/images-grid/images-grid.component';
 
 @Component({
   selector: 'app-images-fondo',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, ImagesGridComponent, NgOptimizedImage],
   templateUrl: './images-fondo.component.html',
   styleUrls: ['./images-fondo.component.scss'],
 })

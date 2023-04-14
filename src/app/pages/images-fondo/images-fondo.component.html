@@ -1,4 +1,4 @@
-<header class="p-2 bg-primary">
+<header class="p-2 bg-primary ">
   <h3 class="text-white">Imagenes de fondo</h3>
 </header>
 
@@ -63,10 +63,8 @@
     </div>
   </div>
   <!-- Listado de imagenes -->
-  <div
-    class="img-list card border-2 border-primary"
-    *ngIf="isLoading !== 'load Images'"
-  >
+
+  <div class="img-list card border-2 border-primary" *ngIf="false">
     <!-- imagen -->
     <div class="img-container" *ngFor="let img of imgs">
       <img [ngSrc]="img.src.secure_url" fill />
@@ -86,4 +84,10 @@
       </div>
     </div>
   </div>
+  <app-images-grid
+    *ngIf="isLoading !== 'load Images'"
+    [loadImgs]="imgs"
+    [deletingImg]="deletingImg"
+    (deleteImageID)="deleteImg($event.id)"
+  ></app-images-grid>
 </div>
