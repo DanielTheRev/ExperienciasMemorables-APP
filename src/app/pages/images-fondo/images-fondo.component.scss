@@ -51,10 +51,6 @@ header {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      transition: hight 0.5s;
-      .alert {
-        animation: showMessage linear 1s;
-      }
     }
   }
   app-images-grid {

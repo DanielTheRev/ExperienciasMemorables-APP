@@ -1,9 +1,10 @@
-<div class="img-list" *ngIf="images.length > 0">
+<div
+  class="img-list" 
+  [ngClass]="{'card border-2 border-primary': showBorder}"
+  *ngIf="images.length > 0"
+>
   <!-- imagen -->
-  <div
-    class="img-container animate__animated animate__fadeInDown"
-    *ngFor="let image of images; index as i"
-  >
+  <div class="img-container" *ngFor="let image of images; index as i">
     <img [src]="image.src" fill />
     <!-- loading element -->
     <div

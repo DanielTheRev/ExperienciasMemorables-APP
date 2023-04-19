@@ -8,7 +8,7 @@
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: 100%;
   grid-auto-flow: row;
   overflow-y: auto;
@@ -16,6 +16,7 @@
   scroll-snap-type: y mandatory;
   gap: 1rem;
   padding: 1rem;
+  animation: backInRight 1s;
   @media (max-width: 578px) {
     grid-template-columns: none;
     grid-auto-columns: 100%;
@@ -30,7 +31,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    border: 2px solid var(--bs-warning);
+    // border: 2px solid var(--bs-warning);
     border-radius: 0.4rem;
     transition: all 2s;
     scroll-snap-align: center;
@@ -63,7 +64,7 @@
       left: 0px;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
     .img-panel {
       z-index: 3;

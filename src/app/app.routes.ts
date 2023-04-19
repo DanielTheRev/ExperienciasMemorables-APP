@@ -5,12 +5,23 @@ import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { ImagesFondoComponent } from './pages/images-fondo/images-fondo.component';
 import { CreateEditServicioComponent } from './pages/servicios/subpages/create-edit-servicio/create-edit-servicio.component';
+import { AuthComponent } from './auth/auth.component';
+import { RedirectToDashboard } from './guards/redirectToDashboard.guard';
+import { RedirectToLogin } from './guards/redirectToLogin.guard';
+import { RedirectUser } from './guards/RedirectUser.guard';
 
 export const AppRoutes: Routes = [
+  {
+    path: 'login',
+    component: AuthComponent,
+    title: 'Iniciar sesion',
+    canActivate: [RedirectUser],
+  },
   {
     path: '',
     component: DashboardComponent,
     title: 'Experiencias Memorables App',
+    canActivate: [RedirectUser],
     children: [
       {
         path: 'Imagenes-fondo',

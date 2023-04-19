@@ -22,6 +22,7 @@ export class ImagesGridComponent implements OnInit, OnChanges {
   images: { src: string; id: string }[] = [];
   @Input('loadImgs') loadImgs: any[] = [];
   @Input('deletingImg') deletingImg = { state: false, id: '' };
+  @Input('showBorder') showBorder = false;
   @Output('deleteImageID') deleteImageID = new EventEmitter<{ id: string }>();
   ngOnInit(): void {
     this.images = this.loadImgs.map((e) => {

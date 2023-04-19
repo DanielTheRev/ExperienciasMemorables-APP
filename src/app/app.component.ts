@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,17 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
 })
-export class AppComponent implements AfterViewInit {
-  // @ViewChild('body') body!: ElementRef<HTMLBodyElement>;
-  theme: string = 'ligth'
+export class AppComponent implements AfterViewInit, OnInit {
+  theme: string = 'ligth';
+  loading = false;
+  private LoginService = inject(AuthService);
+  ngOnInit(): void {
+    // this.LoginService.VerifyUserToken().subscribe({
+    //   next: (res) => {
+    //     this.loading = false;
+    //   },
+    // });
+  }
   ngAfterViewInit(): void {
     window
       .matchMedia('(prefers-color-scheme: dark)')
