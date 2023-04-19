@@ -1,3 +1,3 @@
 export const environment = {
-  server_uri: '',
+  server_uri: 'https://experienciasmemorableseventos.com.ar',
 };
