@@ -2,7 +2,7 @@
   "name": "Experiencias Memorables App",
   "short_name": "Experiencias Memorables App",
   "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "background_color": "#8d9d93",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
