@@ -41,3 +41,30 @@
     </div>
   </div>
 </nav>
+<ul
+  class="nav nav-pills shadow-lg"
+>
+  <li class="nav-item" *ngFor="let nav of navs">
+    <a
+      class="nav-link"
+      [routerLink]="nav.link"
+      [routerLinkActive]="nav.activeClass"
+      >{{ nav.name }}</a
+    >
+  </li>
+  <!-- <li class="nav-item">
+    <a class="nav-link" routerLink="/nosotros" routerLinkActive="active"
+      >Nosotros</a
+    >
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/servicios" routerLinkActive="active"
+      >Servicios</a
+    >
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/contacto" routerLinkActive="active"
+      >Contacto</a
+    >
+  </li> -->
+</ul>

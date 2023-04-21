@@ -9,4 +9,27 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  navs = [
+    {
+      link: 'Imagenes-fondo',
+      activeClass: 'active',
+      name: 'Fondo de imagenes'
+    },
+    {
+      link: 'nosotros',
+      activeClass: 'active',
+      name: 'Nosotros'
+    },
+    {
+      link: 'servicios',
+      activeClass: 'active',
+      name: 'Servicios'
+    },
+    {
+      link: 'contacto',
+      activeClass: 'active',
+      name: 'Contacto'
+    },
+  ]
+}
