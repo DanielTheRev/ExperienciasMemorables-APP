@@ -23,28 +23,32 @@ header {
   gap: 1rem;
   padding: 1rem;
   margin: 0px;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
   overflow: auto;
-  @media (min-width: 450px) {
-    // font-size: 1.3rem;
-    font-weight: bold;
+  @media (max-width: 756px) {
+    // font-size: 1.3rem;font-weight: bold;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0.5rem;
+    .sections {
+      // height: max-content;
+      max-width: 100% !important;
+      padding: 0.5rem 0.5rem !important;
+    }
   }
   @media (max-width: 390px) {
+    flex-direction: column;
     font-weight: bold;
-    overscroll-behavior: none;
   }
-  @media (max-width: 440px) {// iphone -.
-    font-size: 1.2rem !important;
+  @media (max-width: 440px) {
+    // iphone -.
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 1rem !important;
     overflow: auto;
     padding: 0.5rem;
-    .sections {
-      min-width: 100%;
-    }
-    .imagenDeFondoPresentacion{
+    .imagenDeFondoPresentacion {
       min-width: 100%;
     }
     .sections > .section.imagendeFondo {
@@ -105,10 +109,6 @@ header {
         display: flex;
         gap: 0.5rem;
       }
-    }
-    @media (min-width: 450px) {
-      max-width: 100%;
-      padding: 0.5rem 0.5rem;
     }
   }
   .imagenDeFondoPresentacion {
