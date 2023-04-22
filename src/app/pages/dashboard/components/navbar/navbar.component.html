@@ -49,22 +49,10 @@
       class="nav-link"
       [routerLink]="nav.link"
       [routerLinkActive]="nav.activeClass"
-      >{{ nav.name }}</a
+      >
+      <fa-icon [icon]="nav.icon" size='xl'></fa-icon>
+      <span>{{ nav.name }}</span>
+      </a
     >
   </li>
-  <!-- <li class="nav-item">
-    <a class="nav-link" routerLink="/nosotros" routerLinkActive="active"
-      >Nosotros</a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/servicios" routerLinkActive="active"
-      >Servicios</a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/contacto" routerLinkActive="active"
-      >Contacto</a
-    >
-  </li> -->
 </ul>
